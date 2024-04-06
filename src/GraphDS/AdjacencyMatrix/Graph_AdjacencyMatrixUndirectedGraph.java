@@ -1,6 +1,6 @@
 package GraphDS.AdjacencyMatrix;
 
-import java.util.List;
+import java.util.*;
 
 /*
 Graph DS representation requires 2*2 matrix
@@ -41,5 +41,38 @@ public class Graph_AdjacencyMatrixUndirectedGraph {
     public void addUndirectedEdges(int i, int j) {
             matrix[i][j] = 1;
             matrix[j][i] = 1;
+    }
+
+    /*
+    LinkedList can be used as queue
+     */
+    public void bfs(int index) throws Exception {
+        if(index>nodeList.size()) throw new Exception("Index is greater than the size of the Graph");
+        Queue<GraphNodeForAdjacencyMatrix> nodesQueue = new LinkedList<>();
+        nodesQueue.add(nodeList.get(index));
+        while(!nodesQueue.isEmpty()) {
+            GraphNodeForAdjacencyMatrix currentNode = nodesQueue.poll();
+            currentNode.setVisited(true);
+            System.out.print(currentNode.getValue()+" ");
+            ArrayList<GraphNodeForAdjacencyMatrix> neighbors = this.getAllNeighborsForTheNode(currentNode);
+            for (GraphNodeForAdjacencyMatrix g :
+                    neighbors) {
+                if (!g.isVisited()) {
+                    nodesQueue.add(g);
+                    g.setVisited(true);
+                }
+            }
+        }
+    }
+
+
+    public ArrayList<GraphNodeForAdjacencyMatrix> getAllNeighborsForTheNode(GraphNodeForAdjacencyMatrix currentNode) {
+        ArrayList<GraphNodeForAdjacencyMatrix> neighbors = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            if(matrix[currentNode.getIndex()][i]==1) {
+                neighbors.add(nodeList.get(i));
+            }
+        }
+        return neighbors;
     }
 }

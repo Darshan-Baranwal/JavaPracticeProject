@@ -24,6 +24,11 @@ public class TestGraphMain {
         myGraph.addUndirectedEdges(1,4);
         myGraph.addUndirectedEdges(2,3);
         myGraph.addUndirectedEdges(3,4);
-        System.out.println(myGraph.toString());
+//        System.out.println(myGraph.toString());
+        try {
+            myGraph.bfs(2);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
