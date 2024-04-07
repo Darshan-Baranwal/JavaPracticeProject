@@ -56,6 +56,7 @@ public class Graph_AdjacencyListUndirectedGraph {
     DFS uses Stack, rest all logic is same
      */
     public void dfsAlgo(int startingIndex) {
+
         // apply for loop if unconnected graph is mentioned
 
 //        for(GraphNodeAdjacencyList gn: nodeList) {
