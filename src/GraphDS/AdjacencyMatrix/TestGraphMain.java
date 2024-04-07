@@ -26,7 +26,9 @@ public class TestGraphMain {
         myGraph.addUndirectedEdges(3,4);
 //        System.out.println(myGraph.toString());
         try {
-            myGraph.bfs(2);
+            myGraph.bfs(0);
+            nodeList.forEach(v->v.setVisited(false));
+            myGraph.dfs(0);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
