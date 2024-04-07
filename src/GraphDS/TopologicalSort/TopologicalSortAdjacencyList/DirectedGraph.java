@@ -39,7 +39,11 @@ public class DirectedGraph {
         List<String> collect = nodeStack.stream().map(v -> v.getValue()).collect(Collectors.toList());
         Collections.reverse(collect);
         collect.forEach(System.out::print);
+        System.out.println("\n");
         // TODO - Try other approaches as well to print stack from bottom
+        while(!nodeStack.isEmpty()) {
+            System.out.print(nodeStack.pop().getValue() + " ");
+        }
     }
 
     private void topologySortVisit(GraphNode node, Stack<GraphNode> stack) {
