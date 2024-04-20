@@ -1,0 +1,9 @@
+Java streams are the sequence of elements processed at later time when Terminal operation function get called.
+Intermediate Operation changes the stream elements as per the instructions of type and lambda function and returns stream.
+(Consumer(accept), Predicate(test), Function(apply)
+and Supplier(get)). Eg-> forEach/forEachOrdered takes Consumer, map-> takes function, filter -> takes Predicate
+It is useful as streams are lazy loading and logic can be stored and called in future to manipulate, aggregate and reduce the result.
+Stream pipeline can be consumed only once.
+It supports parallel processing, provides a better and efficient way to use CPU cores for element operations.
+Stream didn't have any side effects on original list unlike the List -> subList
+
