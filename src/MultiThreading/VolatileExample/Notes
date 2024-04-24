@@ -1,0 +1,10 @@
+volatile modifier is an indicator telling the variable value may be changes
+by multiple threads
+So whenever change in that variable occur, threads local cache immediately
+push the current value to change other threads cache. To accomplish this,
+volatile modifier ensures that the variable is always read from and written
+to the main memory rather than from any thread specific caches.
+
+It doesn't guarantee Atomicity(all changes either successful or abort)
+
+It should be used for boolean or counters where Atomicity is not mandatory.

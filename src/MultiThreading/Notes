@@ -1,0 +1,10 @@
+Thread class has two constructors -
+1. new Thread() -> used to create thread by subclass extending thread class
+2. new Thread(Runnable runnable) -> used to create the thread object with class implementing Runnable interface
+
+extending thread method might create Diamond problem as Class extend only one class in Java.
+
+using Thread constructor with Runnable object as parameter we can pass lambda expression as .run() implementation
+because Runnable interface is a Functional Interface.
+
+Atomic and immutable objects are thread safe.
