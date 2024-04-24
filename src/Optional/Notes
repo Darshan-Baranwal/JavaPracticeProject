@@ -1,0 +1,29 @@
+Optional is a generic class whose purpose is to be a container for a value
+which may or may not be null.
+Optional is a way of telling you that a value may not be present, therefore you
+can ignore the value in processing
+
+Optional has static factory methods -
+1. empty() - Use this to create an Optional that has no value.
+2. of(T value) - passing null as value will throw null pointer exception
+3. ofNullable(T value) - Use this method to create an Optional when you are
+uncertain if the value is null or not.
+
+4. isPresent()
+5. isEmpty()
+6. get() -  get the optional value. Always use Optional isPresent before getting the value from .get()
+7. isPresent(Consumer c) -> op.isPresent(System.out::println)
+8. orElse(T value) -> op.orElse(-1)-> return Optional value, if not present then default else value
+9. orElseGet(Supplier s) -> orElse lambda will get called when Optional is empty,
+it is good to use the orElseGet(s) from performance perspective as it supplier lambda will get called
+only when no value present in optional
+10. map()
+11. filter()
+12. isPresentOrElse(Consumer, Supplier)
+
+A method returning an Optional should never return null, instead return
+Optional.empty()
+
+Optional is not serializable
+
+
