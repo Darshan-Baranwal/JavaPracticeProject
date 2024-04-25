@@ -1,0 +1,23 @@
+When one thread is executing a synchronised method for an object all other threads that invoke
+synchronized methods for the same object, block and suspend their execution until the first thread
+is done with the object.
+When synchronized method exits it ensures that the state of the object is visible to all threads.
+
+To solve the bankAccount problem we synchronize the deposit and withdraw methods or
+we can use synchronize block(locking on "this" bankAccount instance) in which the amount update is occurring. Here monitor lock will be "this"
+
+Every Object instance in Java has intrinsic lock a.k.a monitor lock.
+A thread releases a lock when it exits from a synchronized block or method, even if it throws an exception.
+Only one thread at a time can acquire this lock, which prevents all the other threads from accessing
+the instance's state, until the lock is released.
+
+All other thread, which want access to the instance's state through synchronized code, will block
+and wait until they can acquire a lock.
+
+The synchronized block, can use a different object, on which to acquire its lock.
+This means that code, accessing this bank account instance, wouldn't have to block entirely.
+
+Local variable store in Thread stack which makes it bad choice for the monitor lock. We have to choose a shared lock like Object instance.
+Local variable can be String stored in String Pool not the local storage of the thread.
+
+nested lock on lockBalance Object because of the Reentrant Synchronisation nested lock handled and avoid indefinite waiting
