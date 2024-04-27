@@ -14,7 +14,7 @@ public class ShoeWarehouse {
     }
 
     public synchronized void receiveOrders(Order item) {
-        while(shippingOrders.size()>20) {
+        while (shippingOrders.size() > 20) {
             try {
 //                System.out.println("Inside receive orders");
                 wait();
@@ -28,7 +28,7 @@ public class ShoeWarehouse {
     }
 
     public synchronized Order fulfillOrder() {
-        while(shippingOrders.size()==0) {
+        while (shippingOrders.size() == 0) {
             try {
 //                System.out.println("Inside fulfill orders");
 
@@ -37,9 +37,9 @@ public class ShoeWarehouse {
                 throw new RuntimeException(e);
             }
         }
-            Order item = shippingOrders.remove(0);
-            System.out.println(Thread.currentThread().getName()+" Fulfilled Order : " + item);
-            notifyAll();
-            return item;
-        }
+        Order item = shippingOrders.remove(0);
+        System.out.println(Thread.currentThread().getName() + " Fulfilled Order : " + item);
+        notifyAll();
+        return item;
+    }
 }

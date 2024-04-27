@@ -12,3 +12,6 @@ awakened is arbitrary.
 
 notifyAll() - wakes up all thread waiting on this object's monitor. This method only be called by a thread
 that is the owner of this object's monitor.
+
+wait, notify, notifyAll must be applied inside synchronized block or method having intrinsic lock.
+

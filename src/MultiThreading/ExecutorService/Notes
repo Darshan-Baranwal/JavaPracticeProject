@@ -1,0 +1,15 @@
+ExecutorService Interface -> Java provides several implementations of this type which provide benefits -
+1. Simplify thread management from User to abstraction execution, to the level of tasks which need to be run.
+2. Efficient Scaling, by utilizing multiple processor cores.
+3. Built in synchronization, reducing concurrency-related errors.
+4. Graceful Shutdown, preventing resource leaks.
+5. Use Thread Pools, reducing cost of creating new threads.
+
+Executors (like Arrays, Collectors, Collections) -> provides inbuilt functionalities and factory methods
+to work with Executor Service.
+
+If we create the thread using Executors we need to shutdown it manually.
+
+FixedThreadPool executor first create the threads of given count then task queues are created in FIFO manner
+the tasks served by the fixed number of threads.
+If 3 threads created and 6 tasks submitted then first 3 tasks executed then further task served or executed.

@@ -1,0 +1,23 @@
+Explicit locks are different than the intrinsic lock as the intrinsic lock is applied in instance of class
+or the some shared memory object and also intrinsic lock applied within synchronized statement scope.
+
+There is no way to test if the intrinsic lock has already been acquired.
+There's no way to interrupt a blocked thread.
+Difficult to debug and examine the intrinsic lock.
+
+java.util.concurrent package - provides Lock interface and some of the provided interface eg. Reenterant lock
+provide more control and flexibility over locking and when and how to block threads and also provide more information
+on lock status and hold.
+
+Lock interface methods -
+1. lock(): void - acquires the lock
+2. tryLock() : boolean - acquires the lock unless the current thread is interrupted.
+3. tryLock(long time, TimeUnit unit) : boolean - acquires the lock if it is free within the given waiting time
+and the current thread has not been interrupted.
+4. unlock(): void - Releases the lock.
+
+---------Thread class has setUncaughtExceptionHandler to Handle the unforeseen exception--
+Explicit lock provide explicit control over when to acquire and release locks , making it easy to avoid
+deadlocks and manage other concurrency challenges.
+Timeout allow attempting to acquire a lock without blocking indefinitely.
+Improve debugging provide info which lock holding the lock and other waiting locks.
