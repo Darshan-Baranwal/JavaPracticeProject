@@ -1,0 +1,13 @@
+Data parallelism
+Automatic workload distribution among threads.
+Improved performance on multi core CPUs.
+Parallel streams requires lots of under the hood items need to be taken care, like managing threads,
+synchronization, memory management etc.
+When to use parallel streams -
+ To make array sorted in parallel processing, first sort the Stream at source then apply parallel stream intermediate
+ operation and then use forEachOrdered
+
+ Use Collectors.joining(" ") -> when joining string in parallel env
+
+Concurrent collections is more preferred against Collections.synchronized collections, because synchronised collections are Blocking and works on locks
+and concurrent collections use non blocking algorithms to enable safe concurrent access without the need for heavy handed locking.

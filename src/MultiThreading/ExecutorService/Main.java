@@ -1,9 +1,8 @@
 package MultiThreading.ExecutorService;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.*;
 
 class ColorThreadFactory implements ThreadFactory {
     private String threadName;
@@ -28,10 +27,51 @@ class ColorThreadFactory implements ThreadFactory {
     }
 }
 public class Main {
-
     public static void main(String[] args) {
+        ExecutorService multiLevelExecutor = Executors.newCachedThreadPool();
+// invokeAll(return list of results) and invokeAny(directly return first result)
+        try {
+            List<Callable<Integer>> taskList= List.of(() -> Main.sum(1, 10, 2, "BLUE"),
+                    () -> Main.sum(1, 10, 2, "RED"),
+                    () -> Main.sum(1, 10, 2, "CYAN"));
+            try {
+                List<Future<Integer>> results = multiLevelExecutor.invokeAll(taskList);
+                for (Future<Integer> result: results){
+                    System.out.println(result.get(500, TimeUnit.SECONDS));
+                }
+
+                System.out.println("---------------------");
+                Integer firstResult = multiLevelExecutor.invokeAny(taskList);
+                System.out.println("invokeAny "+firstResult);
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                throw new RuntimeException(e);
+            }
+        } finally {
+            multiLevelExecutor.shutdown();
+        }
+    }
+
+    public static void cachedmain(String[] args) {
+        ExecutorService multiLevelExecutor = Executors.newCachedThreadPool();
+
+        try {
+            Future<Integer> blueSum = multiLevelExecutor.submit(() -> Main.sum(1, 10, 2, "BLUE"));
+            Future<Integer> redSum = multiLevelExecutor.submit(() -> Main.sum(1, 10, 2, "RED"));
+            Future<Integer> cyanSum = multiLevelExecutor.submit(() -> Main.sum(1, 10, 2, "CYAN"));
+            try {
+                System.out.println(blueSum.get());
+                System.out.println(redSum.get(500, TimeUnit.SECONDS));
+                System.out.println(cyanSum.get());
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                throw new RuntimeException(e);
+            }
+        } finally {
+            multiLevelExecutor.shutdown();
+        }
+    }
+    public static void fixedmain(String[] args) {
         int count = 3;
-        ExecutorService multiExecutors = Executors.newFixedThreadPool(3, new ColorThreadFactory());
+        ExecutorService multiExecutors = Executors.newFixedThreadPool(count, new ColorThreadFactory());
         for (int i = 0; i < 6; i++) { // check notes for the behaviour
             multiExecutors.execute(Main::countDown);
         }
@@ -90,5 +130,14 @@ public class Main {
             System.out.println(
                     threadColorName.replace("ANSI_","")+ " " +i);
         }
+    }
+    static int sum(int start, int end, int delta, String color) {
+        String colorString = ThreadColor.valueOf("ANSI_"+color).name();
+        int sum = 0;
+        for (int i = start; i < end; i=i+delta) {
+            sum +=i;
+        }
+        System.out.println(colorString+ Thread.currentThread().getName()+","+color+" "+sum);
+        return sum;
     }
 }

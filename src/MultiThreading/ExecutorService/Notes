@@ -13,3 +13,29 @@ If we create the thread using Executors we need to shutdown it manually.
 FixedThreadPool executor first create the threads of given count then task queues are created in FIFO manner
 the tasks served by the fixed number of threads.
 If 3 threads created and 6 tasks submitted then first 3 tasks executed then further task served or executed.
+
+Thread pool classes -
+FixedThreadPool
+CachedThreadPool - Creates new threads as needed, so its a variable size pool
+ScheduledThreadPool - Can schedule tasks to run at a specific time or repeatedly at regular intervals, uses synchronous queue
+// Check java note book for detailed analysis.
+WorkStealingPool - Uses work stealing algorithm to distribute tasks among the threads in the pool. Parallel task execution.
+ForJoinPool - Specialized WorkStealingPool for executing ForkJoin tasks.
+
+Executors Thread pool can be start using
+1. execute(Runnable task): void - no return
+2. submit(Runnable task): Future - returns Future
+3. submit(Runnable task, T result): Future
+4. submit(Callable<T> task): Future -> Callable return the value of the thread.
+
+Future -> placeholder for result instance of an asynchronous computation. It has methods that can "Cancel",
+the task, "retrieve" the result, or check if the computation was completed or cancelled
+The get()/get(long, TimeUnit) method returns the result but you can call this get method when the computation
+is complete otherwise the call wil block until it does complete.
+get overloaded version allows you to wait for a specific time rather than blocking.
+Future methods -
+1. cancel(boolean): boolean
+2. get():V
+3. get(long, TimeUnit waitTime): V
+4. isCancelled: boolean
+5. isDone: boolean

@@ -1,0 +1,1 @@
+To solve the deadlock example the sequence to taking lock should be in sync with other thread taking lock

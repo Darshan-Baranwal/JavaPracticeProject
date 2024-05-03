@@ -8,3 +8,18 @@ using Thread constructor with Runnable object as parameter we can pass lambda ex
 because Runnable interface is a Functional Interface.
 
 Atomic and immutable objects are thread safe.
+
+CopyOnWriteArrayList -> Whenever list is modified by adding, updating, or removing elements, a new copy of
+the underlying array is created.
+The modification is performed on the new copy, allowing concurrent read operations to use the original
+unmodified array.
+This costly operation but may be more efficient than alternatives when traversal operations vastly outnumber mutations.
+
+ArrayBlockingQueue - thread safe queue providing timeout blocking adding and updating and polling methods
+add(E e) - non blocking
+offer(E e) -  non blocking
+offer(E e, timeout)  - blocking till timeout
+put indefinite blocking
+peek() non blocking return the top element but didn't remove it
+poll(E e) non blocking returns and remove the top element
+poll(E e, timeout) -  blocking till timeout return and remove the top element

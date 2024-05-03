@@ -1,0 +1,8 @@
+Starvation Thread problem occur when thread is unable to obtain the resource it needs, to execute.
+This is usually caused by the other concurrent thread being greedy.
+Some threads are able to make progress others can't.
+This means your application may still keep running and some of the work is getting done. but not all of it.
+Starvation can fixed with Fairness of locks.
+Monitor/implicit locks are unfair lock - it complete depend on cores who will get the thread
+but Explicit locks like Reentrant lock can be Unfair and Fair.
+Fair lock makes sure that the lock will distributed to other threads as well.

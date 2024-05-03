@@ -3,15 +3,19 @@ package MultiThreading.SynchronizationChallenge;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class ShoeWarehouse {
+public class ShoeWarehouseUsingExecutors {
 
-    List<Order> shippingOrders;
+    private List<Order> shippingOrders;
+    private ExecutorService fulfillShipmentService;
     public static final String[] PRODUCT_LIST =
             {"Heels", "Boots", "Formals", "Sports"};
 
-    public ShoeWarehouse() {
+    public ShoeWarehouseUsingExecutors() {
         this.shippingOrders = new ArrayList<>();
+        this.fulfillShipmentService = Executors.newFixedThreadPool(3);
     }
 
     public synchronized void receiveOrders(Order item) {
@@ -24,15 +28,14 @@ public class ShoeWarehouse {
             }
         }
         shippingOrders.add(item);
+        this.fulfillShipmentService.submit(() -> this.fulfillOrder());
         notifyAll();
-        System.out.println("Item added :" + item);
+        System.out.println(Thread.currentThread().getName()+" Item added :" + item);
     }
 
     public synchronized Order fulfillOrder() {
         while (shippingOrders.size() == 0) {
             try {
-//                System.out.println("Inside fulfill orders");
-
                 wait();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -42,5 +45,9 @@ public class ShoeWarehouse {
         System.out.println(Thread.currentThread().getName() + " Fulfilled Order : " + item);
         notifyAll();
         return item;
+    }
+
+    public void shutdown() {
+        this.fulfillShipmentService.shutdown();
     }
 }

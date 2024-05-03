@@ -1,14 +1,17 @@
 package MultiThreading.DeadlockExample;
 
 import java.util.Objects;
-
+/*
+Remove read() -> wait() and write method wait() the program run into deadlock situation
+ */
 class MessageRepository {
     private String message;
     private boolean hasMessage = false;
     public synchronized String read() {
         while(!hasMessage) {
             try {
-                wait();
+                Thread.sleep(100);
+//                wait();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -20,7 +23,9 @@ class MessageRepository {
     public synchronized void write(String message) {
         while (hasMessage) {
             try {
-                wait();// this object lock is no release and this thread become ideal
+                Thread.sleep(100);
+//                wait();
+                // this object lock is no release and this thread become ideal
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
