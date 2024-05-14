@@ -145,7 +145,7 @@ public class Main {
         System.out.println("-----------------------");
 
         Map<String, Map<String, List<Student>>> multiLevel = list.stream().collect(
-                groupingBy(Student::getCountryCode, groupingBy(Student::getGender))
+                groupingBy(Student::getCountryCode, groupingBy(Student::getGender, Collectors.toList()))
         );
         multiLevel.forEach((k,v) -> {
             System.out.println(k);

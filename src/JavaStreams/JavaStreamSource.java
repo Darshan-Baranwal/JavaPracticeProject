@@ -50,6 +50,4 @@ public static void main(String[] args) {
         String[] s = {"Four ", "Five ", "Six "};
        return Arrays.stream(s).map(String::toUpperCase);
     }
-
-
 }
