@@ -5,6 +5,8 @@ import java.util.List;
 
 public class GraphNodeAdjacencyList {
     private int index;
+    private String value;
+
     private List<GraphNodeAdjacencyList> neighborsList = new ArrayList<>();
 
     private boolean isVisited = false;
@@ -13,7 +15,6 @@ public class GraphNodeAdjacencyList {
         this.index = index;
         this.value = value;
     }
-    private String value;
 
     public int getIndex() {
         return index;
