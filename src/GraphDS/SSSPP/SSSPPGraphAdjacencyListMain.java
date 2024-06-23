@@ -27,7 +27,7 @@ public class SSSPPGraphAdjacencyListMain {
 //        System.out.println(myGraph.toString());
         nodeAdjacencyList.forEach(v->v.setVisited(false));
 
-        myGraph.getSSSP_ForNode(nodeAdjacencyList.get(0));
+        myGraph.getSSSP_ForNode(nodeAdjacencyList.get(0), nodeAdjacencyList.get(3));
 
     }
 }

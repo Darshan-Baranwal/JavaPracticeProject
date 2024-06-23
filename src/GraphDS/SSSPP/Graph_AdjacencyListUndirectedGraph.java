@@ -1,9 +1,6 @@
 package GraphDS.SSSPP;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Graph_AdjacencyListUndirectedGraph {
@@ -85,16 +82,34 @@ public class Graph_AdjacencyListUndirectedGraph {
         }
     }
 
-    public void getSSSP_ForNode(GraphNodeAdjacencyList startingNode) {
+    public void getSSSP_ForNode(GraphNodeAdjacencyList startingNode,
+                                GraphNodeAdjacencyList targetNode) {
         // Queue can also be used
+        Map<GraphNodeAdjacencyList, List<GraphNodeAdjacencyList>> shortPathMap =
+                new HashMap<>();
         LinkedList<GraphNodeAdjacencyList> queue = new LinkedList<>();
         queue.add(startingNode);
         while(!queue.isEmpty()) {
             GraphNodeAdjacencyList currentNode = queue.remove(0);
             currentNode.setVisited(true);
             System.out.print("Current Node "+currentNode.getValue()+" :");
-            printPath(currentNode);
+            List<GraphNodeAdjacencyList> l = new ArrayList<>();
+            shortPathMap.put(currentNode, l);
+            printPath(currentNode, shortPathMap.get(currentNode));
+            l.add(currentNode);
             System.out.println("");
+            String shortestPath = shortPathMap.get(currentNode).stream().filter(v -> v!=null)
+                    .map(node -> node.getValue())
+//                    .sorted(Comparator.reverseOrder())
+                    .collect(Collectors.joining("->"));
+            System.out.println(shortestPath);
+            shortPathMap.get(currentNode).forEach(v-> {
+                if (v != null) {
+//                    System.out.print(v.getValue() + ",");
+                }
+            } );
+            System.out.println("");
+
             for (GraphNodeAdjacencyList neighbor :
                     currentNode.getNeighborsList()) {
                 if (!neighbor.isVisited()) {
@@ -106,10 +121,12 @@ public class Graph_AdjacencyListUndirectedGraph {
         }
     }
 
-    void printPath(GraphNodeAdjacencyList node) {
+    void printPath(GraphNodeAdjacencyList node,
+                   List<GraphNodeAdjacencyList> shortPathMapList) {
         if(node.parentNode != null) {
-            printPath(node.parentNode);
+            printPath(node.parentNode, shortPathMapList);
         }
+        shortPathMapList.add(node.parentNode);
         System.out.print(node.getValue()+" ");
     }
 }
