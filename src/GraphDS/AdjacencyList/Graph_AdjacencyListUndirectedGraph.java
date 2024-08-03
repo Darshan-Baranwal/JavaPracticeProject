@@ -6,6 +6,19 @@ import java.util.stream.Collectors;
 public class Graph_AdjacencyListUndirectedGraph {
     List<GraphNodeAdjacencyList> nodeList;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Graph_AdjacencyListUndirectedGraph that = (Graph_AdjacencyListUndirectedGraph) o;
+        return Objects.equals(nodeList, that.nodeList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nodeList);
+    }
+
     public Graph_AdjacencyListUndirectedGraph(List<GraphNodeAdjacencyList> nodeList) {
         this.nodeList = nodeList;
     }
