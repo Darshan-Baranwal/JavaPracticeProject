@@ -5,6 +5,7 @@ class Node{
     Node next;
     public Node(String data) {
         this.value = data;
+        next = null;
     }
     @Override
     public boolean equals(Object n) {

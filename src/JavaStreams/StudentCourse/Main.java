@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.*;
 public class Main {
     public static void main(String[] args) {
         Course jsMaterClass = new Course("JSM", "Javascript Masterclass");
-        Course javaMS = new Course("JAVA", "Java Master class");
+        Course javaMS = new Course("JAVA", "JavaPractice Master class");
         Student s1 = new Student("IN", 2019, 27,"M", true, jsMaterClass, javaMS);
         Student s2 = new Student("CN", 2018, 26,"F", true, jsMaterClass, javaMS);
         Student s3 = new Student("AU", 2019, 27,"M", false, jsMaterClass);

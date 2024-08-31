@@ -69,12 +69,21 @@ public class Main {
 //        getDepartmentWiseEmployeeList(empList);
 //        getSortedDepartmentWiseEmployeeList(empList);
 //        getDepartmentHighestSalariedEmployee(empList);
-        getNthHighestSalariedEmployeePerDept(empList, 2);
+//        getNthHighestSalariedEmployeePerDept(empList, 2);
 //        getEmployeeCountPerDepartment(empList);
-//        getDepartmentEmployeesSalaryGreaterThan(empList, 50000);
+        getDepartmentEmployeesSalaryGreaterThan(empList, 50000);
 //        getAvgSalaryOFDepartment(empList);
 //        getEmployeeCountCityWise(empList);
     }
+
+    private static void getDepartmentEmployeesSalaryGreaterThan(List<Employee> empList, int i) {
+    }
+
+    private static void getEmployeeCountPerDepartment(List<Employee> empList) {
+        empList.stream().collect(Collectors.groupingBy(e->e.department.departmentName, Collectors.counting()))
+        .forEach((k,v) -> System.out.println(k+" , "+v.toString()));
+    }
+
     private static void getDepartmentWiseEmployeeList(List<Employee> empList) {
         Map<String, List<Employee>> map = empList.stream()
                 .collect(Collectors.groupingBy(e -> e.department.departmentName, Collectors.toCollection(ArrayList::new)));

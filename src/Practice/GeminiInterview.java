@@ -4,8 +4,16 @@ import java.util.*;
 
 public class GeminiInterview {
     public static void main(String[] args) {
+        String r = "ada";
+        StringBuilder sb = new StringBuilder(r).reverse();
+//                .append("f",0,1)
+//                .reverse();
+        System.out.println(sb.toString().equals(r));
+        System.out.println((int)Math.pow(10,2));
+
         // "ABCDEFGABEFGHIJK"
         String input = "ABCDEFGABEF"; // ABCDEFG -7, BCDEFGA -7, CDEFGAB - 7
+
         char[] c = input.toCharArray();
         int l = 0;
         List<String> result = new ArrayList<>();

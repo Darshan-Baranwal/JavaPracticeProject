@@ -7,6 +7,9 @@ public class SingleLinkedList {
         head=null;
         length = 0;
     }
+
+    
+
     public static void main(String[] args) {
         SingleLinkedList sl = new SingleLinkedList();
         sl.addToLast("5");

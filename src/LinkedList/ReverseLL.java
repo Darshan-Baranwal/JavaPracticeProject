@@ -13,6 +13,7 @@ public class ReverseLL {
         sl.addToLast("6");
         sl.addToLast("7");
 //        sl.addToLast("8");
+//        sl.addToLast("8");
 //        sl.addToLast("9");
 //        sl.printLinkedList(sl);
 //        sl.addAtIndex(2,"11");
@@ -21,7 +22,6 @@ public class ReverseLL {
         sl.printLinkedList(sl);
         System.out.println("\n");
         sl.reverseLL();
-
         sl.printLinkedList(sl);
     }
 
