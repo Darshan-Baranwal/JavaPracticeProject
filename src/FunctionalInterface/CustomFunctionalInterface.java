@@ -16,10 +16,14 @@ public class CustomFunctionalInterface<T> {
                 return a+b;
             }
         };
+
         System.out.println(calculateSum.operate(5,7));
 
         Operate<Integer> calculateMultiply = (a,b) -> a*b;
         System.out.println(calculateMultiply.operate(5,7));
+
+        Operate<String> concateString = (a, b) -> {return a+b;};
+        System.out.println(concateString.operate("Darshan ","Baranwal"));
 
     }
 }

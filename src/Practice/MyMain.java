@@ -4,16 +4,6 @@ import java.util.*;
 
 public class MyMain {
     public static void main(String[] args) {
-         Base baseOrg = new Base();
-         System.out.println(baseOrg.value); // 90
-
-         Base base = new Child();
-         System.out.println(base.value); // 90
-         base.display(new ChildService()); // In Base
-
-         Child child = new Child();
-         System.out.println(child.value); // 45
-         child.display(new BaseService()); // In Base
 
         // Map<String, String> countryCapitalMap=new HashMap<>();
         // countryCapitalMap.put("india","Delhi");
@@ -38,23 +28,6 @@ public class MyMain {
 }
 
 
-class BaseService {}
-class ChildService extends BaseService {}
-
-class Base {
-    public int value = 90;
-    public void display(BaseService service) {
-
-        System.out.println("In Base");
-    }
-}
-
-class Child extends Base {
-    public int value = 45;
-    public void display(ChildService service) {
-        System.out.println("In Child");
-    }
-}
 
 // Observable ->
 
@@ -96,15 +69,3 @@ class Observer2 implements Observer {
     }
 }
 
-class SingletonClass {
-    private static SingletonClass intanceVariable = null;
-    private SingletonClass() {
-
-    }
-    static SingletonClass getInstance() {
-        if(SingletonClass.intanceVariable == null) {
-            SingletonClass.intanceVariable = new SingletonClass();
-        }
-        return SingletonClass.intanceVariable;
-    }
-}

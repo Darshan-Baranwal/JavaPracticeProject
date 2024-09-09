@@ -19,6 +19,10 @@ class Employee implements Comparable{
         this.homeLocation = homeLocation;
     }
 
+    public long getSalary() {
+        return salary;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -65,18 +69,55 @@ public class Main {
         empList.add(new Employee(6, "Wick", 70000, new Department(6, "HR"), "NOIDA"));
         empList.add(new Employee(7, "Kohli", 80000, new Department(7, "IT"), "GKP"));
 
+//        System.out.println(empList.stream().max((e1,e2) -> ((int) e1.salary - (int)e2.salary)).get().toString());
+
+//        https://github.com/veerao05/programs/blob/main/src/com/java8/Java8Employee.java
+
         // learn groupby from https://stackabuse.com/guide-to-java-8-collectors-groupingby/
+//        getEmployeeWithMaxSalary(empList);
 //        getDepartmentWiseEmployeeList(empList);
 //        getSortedDepartmentWiseEmployeeList(empList);
 //        getDepartmentHighestSalariedEmployee(empList);
 //        getNthHighestSalariedEmployeePerDept(empList, 2);
 //        getEmployeeCountPerDepartment(empList);
-        getDepartmentEmployeesSalaryGreaterThan(empList, 50000);
+//        getDepartmentEmployeesSalaryGreaterThan(empList, 50000);
 //        getAvgSalaryOFDepartment(empList);
 //        getEmployeeCountCityWise(empList);
+//        getNthHighestSalariedEmployee(empList);
+    }
+
+    private static void getEmployeeWithMaxSalary(List<Employee> empList) {
+        System.out.println(empList.stream().max((e1,e2) -> ((int) e1.salary - (int)e2.salary)).get().toString());
+    }
+
+    private static void getNthHighestSalariedEmployee(List<Employee> empList) {
+        empList.stream()
+                .sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).skip(3).findFirst().get();
+    }
+
+    private static void getAvgSalaryOFDepartment(List<Employee> empList) {
+        empList.stream().collect(
+                Collectors.groupingBy(e->e.department.departmentName, Collectors.averagingLong(e->e.salary)))
+                .forEach((k,v) -> System.out.println(k+" , "+v.toString()));
     }
 
     private static void getDepartmentEmployeesSalaryGreaterThan(List<Employee> empList, int i) {
+//        Map<String, List<Employee>> m = new HashMap<>();
+//        for (Employee e :
+//                empList) {
+//            List<Employee> tempList = empList.stream()
+//                    .filter( emp -> emp.department.departmentName.equals(e.department.departmentName) && emp.salary>i)
+//                    .collect(Collectors.toList());
+//            if(tempList.size()>0) {
+//                m.put(e.department.departmentName,
+//                        tempList);
+//            }
+//        }
+//        m.forEach((k,v) -> System.out.println(k+" , "+v.toString()));
+
+        empList.stream().filter(e -> e.salary>i)
+                .collect(Collectors.groupingBy(e -> e.department.departmentName))
+                .forEach((k,v) -> System.out.println(k+" , "+v.toString()));
     }
 
     private static void getEmployeeCountPerDepartment(List<Employee> empList) {
@@ -97,8 +138,14 @@ public class Main {
                 // (e1, e2) -> e.getKey().compareTo(e2.getKey())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (old, latest) -> old, LinkedHashMap::new));
         map.forEach((k,v) -> System.out.println(k+" , "+v.toString()));
+
+        empList.stream().collect(Collectors.groupingBy(e -> e.department.departmentName,
+                Collectors.collectingAndThen(Collectors.toList(),
+                        list -> list.stream().sorted(Comparator.comparingDouble(Employee::getSalary)))));
+
     }
     private static void getDepartmentHighestSalariedEmployee(List<Employee> empList) {
+
         Map<String, Employee> collect = empList.stream()
                 .collect(Collectors.groupingBy(e -> e.department.departmentName,
                 Collectors.collectingAndThen(Collectors.maxBy((e1, e2) -> (int) (e1.salary - e2.salary)), Optional::get)));
