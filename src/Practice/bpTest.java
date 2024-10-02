@@ -2,6 +2,7 @@ package Practice;
 import java.util.*;
 public class bpTest {
     public static void main(String[] args) {
+
         List<String> l = new ArrayList<>();
         l.add("a->b");
         l.add("r->s");
@@ -12,15 +13,28 @@ public class bpTest {
         l.add("w->z");
         l.add("a,q,w");
         l.add("a,c,r");
-
-        Map<String, String> m = new HashMap<>();
-        for(String s: l){
-            if(s.contains("->")) {
-
-            } else {
-
+        for (int i = 0; i < l.size(); i++) {
+            if(l.get(i).contains("a->b")){
+                l.add("123");
             }
         }
+
+        System.out.println(l);
+
+        l.forEach(v -> {
+            if(v.contains("a->b")){
+                l.add("123");
+            }
+        });
+
+//        Map<String, String> m = new HashMap<>();
+//        for(String s: l){
+//            if(s.contains("->")) {
+//
+//            } else {
+//
+//            }
+//        }
 
 
     }

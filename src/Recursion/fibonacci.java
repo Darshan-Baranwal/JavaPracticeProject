@@ -8,9 +8,22 @@ public class fibonacci {
 
     public static void main(String[] args) {
         int n = 5; // 1,1,2,3,5
-        List<Integer> fibonacciArray = new ArrayList<>();
         List<Integer>  result = getFibonacci(n);
-        System.out.println(result);
+//        System.out.println(result);
+        int nthFibNumber = getNthFibonacci(n);
+        System.out.println(nthFibNumber);
+//        for(int i=0;i<5;i++) {
+//            System.out.println(getNthFibonacci(i));
+//        }
+
+
+    }
+
+    private static int getNthFibonacci(int n) {
+          if(n<=1) {
+            return n;
+        }
+        return getNthFibonacci(n-1)+getNthFibonacci(n-2);
     }
 
     private static List<Integer> getFibonacci(int n) {

@@ -12,9 +12,8 @@ public class DeadlockExample {
     static String  resourceA = "resourceA";
     static String resourceB = "resourceB";
     public static void main(String[] args) {
-//        File resourceA = new File("input.csv");
-//        File resourceB = new File("output.csv");
-        // to produce deadlock reverse the order of locks in one thread.
+
+        // ---> to produce deadlock reverse the order of locks in one thread.
 
         Thread threadA = new Thread(() -> {
             System.out.println("Attempting to take lock in resourceA by "+ Thread.currentThread().getName());
