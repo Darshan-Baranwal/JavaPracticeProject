@@ -1,4 +1,3 @@
-
 -- create
 CREATE TABLE EMPLOYEE (
   empId int not null primary key,
@@ -21,8 +20,9 @@ Create TABLE enroll(
   constraint enroll_fk_dep foreign key (depId) references DEPARTMENT (depId)
   on delete cascade
 )
-
 -- Enroll table has empId and depId as composite key
+-- Adding column via alter table
+Alter table enroll add description varchar(10);
 
 INSERT INTO EMPLOYEE(empId,name,dept) VALUES (1, 'Clark', 'Sales');
 INSERT INTO EMPLOYEE(empId,name,dept) VALUES (2, 'Dave', 'Accounting');
