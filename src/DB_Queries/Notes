@@ -1,3 +1,6 @@
 Topics covered -
 1. PK, FK, On delete cascade, composite key, alter table for constraints
-2.
+2.On delete cascade - ON DELETE CASCADE is a foreign key constraint in SQL that automatically deletes rows in a child table
+when the corresponding row in the parent table is deleted.
+3.
+

@@ -1,6 +1,17 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
+class User {
+    String txnType;
+    String amount;
+    String name;
+
+    public User(String txnType, String amount, String name) {
+        this.txnType = txnType;
+        this.amount = amount;
+        this.name = name;
+    }
+}
 public class TestMain {
     public static void main(String[] args) {
         // Separate even and odd, first odd then even
@@ -89,6 +100,36 @@ public class TestMain {
         String p1 = "abdba";
         String r = String.valueOf(new StringBuilder(p1).reverse());
         System.out.println(r.equals(p1));
+
+        System.out.println("----------------------");
+
+        List<String> amounts = new ArrayList<>();
+        amounts.add("$100.00");
+        amounts.add("$2.50");
+        amounts.add("$50.00");
+        amounts.add("$10.99");
+
+        System.out.println("Original List: " + amounts);
+
+        // Sort the list using a custom comparator
+        List<String> sortedAmounts = amounts.stream()
+                .sorted((v1, v2) -> {
+                    Double d1 = Double.parseDouble(v1.substring(1));
+                    Double d2 = Double.parseDouble(v2.substring(1));
+                    return d2.compareTo(d1);
+                }) // Remove "$" and parse to double
+                .collect(Collectors.toList());
+
+        System.out.println("Sorted List: " + sortedAmounts);
+
+        List<User> users = List.of(new User("debit", "$123.1", "Darshan"));
+
+        // get users maximum and minimum debit and credit txn
+        List<User> result = new ArrayList<>();
+        users.stream().filter(u -> u.txnType.equals("debit"))
+                .max((b1,b2) -> Double.valueOf(b2.amount.substring(1)).compareTo(Double.valueOf(b1.amount.substring(1)))).ifPresent(u -> result.add(u));
+        users.stream().filter(u -> u.txnType.equals("credit"))
+                .max((b1,b2) -> b2.amount.compareTo(b1.amount)).ifPresent(u -> result.add(u));
     }
 
 }
