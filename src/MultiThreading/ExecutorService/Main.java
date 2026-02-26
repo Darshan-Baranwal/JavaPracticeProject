@@ -35,7 +35,7 @@ public class Main {
                     () -> Main.sum(1, 10, 2, "RED"),
                     () -> Main.sum(1, 10, 2, "CYAN"));
             try {
-                List<Future<Integer>> results = multiLevelExecutor.invokeAll(taskList);
+                    List<Future<Integer>> results = multiLevelExecutor.invokeAll(taskList);
                 for (Future<Integer> result: results){
                     System.out.println(result.get(500, TimeUnit.SECONDS));
                 }

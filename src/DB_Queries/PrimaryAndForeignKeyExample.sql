@@ -38,7 +38,15 @@ SELECT * FROM enroll;
 -- SELECT emp.name, dep.empId, dep.description from EMPLOYEE as emp,
 -- DEPARTMENT as dep where emp.empId= dep.empId;
 
+-- ADD Primary key
 -- alter table EMPLOYEE add constraint pk_empId primary key (empId);
+
+ALTER TABLE child_table
+    ADD CONSTRAINT fk_name
+    FOREIGN KEY (child_column)
+    REFERENCES parent_table (parent_column);
+
+-----------------
 delete from EMPLOYEE where empId = 3;
 SELECT * FROM EMPLOYEE;
 SELECT * FROM DEPARTMENT;

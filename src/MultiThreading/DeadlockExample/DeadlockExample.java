@@ -36,7 +36,7 @@ public class DeadlockExample {
             synchronized (resourceA) {
                 System.out.println("taking lock on resourceA by Thread - "+ Thread.currentThread().getName());
                 System.out.println("Attempting to take lock in resourceB by "+ Thread.currentThread().getName());
-
+// Uncomment to produce deadlock
 //                try {
 //                    Thread.sleep(5000);
 //                } catch (InterruptedException e) {

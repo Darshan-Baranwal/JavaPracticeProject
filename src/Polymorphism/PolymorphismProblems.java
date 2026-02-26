@@ -15,7 +15,6 @@ class Base {
 class Child extends Base {
     public int value = 45;
     public void display(ChildService service) {
-        // Note: a overridden method as argument signature is different
         System.out.println("In Polymorphism.Child");
     }
 }
@@ -27,6 +26,7 @@ public class PolymorphismProblems {
 
         Base base = new Child();
         // through base reference we can call child's overridden methods only.
+        // rest primitive variable and static variable will be Base class' only
         System.out.println(base.value); // 90 ??
         base.display(new ChildService()); // In Polymorphism.Base ??
 

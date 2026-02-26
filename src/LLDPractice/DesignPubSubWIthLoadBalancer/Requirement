@@ -1,0 +1,133 @@
+Machine coding
+
+
+Create a library for fair resource utilization for shared multi-tenant pub/sub system
+Use in-process queues to emulate persistent queues
+Publishers publish messages in bulk (e.g. 1000 messages at once) usually
+When multiple publishers do publish in bulk, the worker process spends most of their time
+for 1 tenant only at a time if they consume from a single queue for all tenants.
+This causes delay in processing messages for other tenants. We want to solve this.
+We want to fairly distribute message processing for multiple tenants within a single process.
+For publishers keep the interface simple that they all publish to a single queue. A message in the queue can belong to any tenant. We can keep a key like “tenant_id” within the message for this.
+Use a pool of workers (VirtualThreads/Goroutines(only for golang) with a max limit per process e.g. 100) to consumer messages for all tenants.
+Create a library which accepts the queue and pool of workers as input and it internally does the fair distribution for all tenants.
+Expectation
+Code should work for mocked publishers and consumers. In consumer, we can just print the message to stdout with some time delay to test.
+
+Output:
+
+Processing: Message-0 from tenant-B | Tenant: tenant-B
+Processing: Message-0 from tenant-A | Tenant: tenant-A
+Processing: Message-1 from tenant-A | Tenant: tenant-A
+Processing: Message-1 from tenant-B | Tenant: tenant-B
+Processing: Message-2 from tenant-A | Tenant: tenant-A
+Processing: Message-2 from tenant-B | Tenant: tenant-B
+Processing: Message-3 from tenant-B | Tenant: tenant-B
+Processing: Message-3 from tenant-A | Tenant: tenant-A
+
+
+
+
+
+package org.example;
+
+
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+
+record Message(String tenant, String message) {
+}
+class Worker{
+   public String status = "Free"; // Busy / Free
+
+
+   public void consume(List<Message> messages, int i) {
+       this.status = "Busy";
+       messages.forEach(m -> {
+           System.out.println("Consumer "+i+" is processing");
+           System.out.println("Processing: "+m.message()+" from "+ m.tenant());
+       });
+       this.status = "Free";
+
+
+   }
+}
+class Publisher{
+   Queue<Message> messageQueue;
+   Publisher(Queue<Message> messageQueue) {
+       this.messageQueue = messageQueue;
+   }
+
+
+   void publish(List<Message> messages) {
+       messages.forEach(m -> this.messageQueue.offer(m));
+       System.out.println("Published the messages");
+   }
+}
+// Worker{status: free/busy, consume:()->{}} -> List<Worker> the first free worker should get utilised
+
+
+class Consumer {
+   public Queue<Message> messageQueue;
+   public DistributionDesign distributionDesignForWorker;
+   public List<Worker> workers;
+   Consumer(Queue<Message> messageQueue, DistributionDesign distributionDesignForWorker, List<Worker> workers) {
+       this.messageQueue = messageQueue;
+       this.distributionDesignForWorker = distributionDesignForWorker;
+       this.workers = workers;
+   }
+
+
+   void consume(int i) {
+       System.out.println("Consumer "+i+" is processing");
+           if(!messageQueue.isEmpty()){
+               Optional<Worker> freeWorker = this.distributionDesignForWorker.nextFreeWorker(this.workers);
+               if(freeWorker.isPresent()){
+                   Worker worker = freeWorker.get();
+                   worker.consume(messageQueue.stream().toList(), i);
+               }
+
+
+           }
+   }
+}
+public class Main {
+   static Queue<Message> messageQueue = new LinkedList<>();
+   public static void main(String[] args) {
+
+
+       // configuration / application.yml
+       int consumerCount = 2;
+       int producerCount = 3;
+       int numberOfWorkers = 100;
+       int messageCount = 50;
+       // 50/3 - 16
+       List<Worker> workers = new ArrayList<>(numberOfWorkers);
+       for(int i = producerCount; i>0;i--) {
+           Publisher publisher1 = new Publisher(messageQueue);
+           publisher1.publish(messageGenerator(messageCount, i));
+       }
+
+
+
+
+       for(int i = consumerCount; i>0;i--) {
+           Consumer consumer = new Consumer(messageQueue, new GetFirstFreeWorker(), workers);
+           consumer.consume(i);
+       }
+   }
+   static List<Message> messageGenerator(int count, int initialValue) {
+       List<Message> messages = new ArrayList<>(count);
+       for(int i = count;i>0;i--) {
+           messages.add(new Message("Tenant "+i+initialValue, "Message "+i+initialValue));
+       }
+       return messages;
+   }
+
+
+}
+
+
+

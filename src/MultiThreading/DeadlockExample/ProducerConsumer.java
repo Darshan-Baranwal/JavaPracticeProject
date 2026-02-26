@@ -9,9 +9,11 @@ class MessageRepository {
     private boolean hasMessage = false;
     public synchronized String read() {
         while(!hasMessage) {
+            // infinite loop running till write method produce msg and
+            // make hasMessage true
             try {
                 Thread.sleep(100);
-//                wait();
+                wait();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -24,8 +26,8 @@ class MessageRepository {
         while (hasMessage) {
             try {
                 Thread.sleep(100);
-//                wait();
-                // this object lock is no release and this thread become ideal
+                wait();
+                // this object lock is now released and this thread become ideal
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

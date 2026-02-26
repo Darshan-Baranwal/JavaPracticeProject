@@ -145,6 +145,12 @@ public class Main {
 
     }
     private static void getDepartmentHighestSalariedEmployee(List<Employee> empList) {
+        Map<String, List<Employee>> collect1 = empList.stream()
+                .collect(Collectors.groupingBy(e -> e.department.departmentName));
+        Map<String, Employee> result = new HashMap<>();
+        collect1.entrySet()
+                .stream().forEach((e) -> 
+                result.put(e.getKey(), Collections.max(e.getValue(), (e1, e2) -> (int) (e2.salary - e1.salary))));
 
         Map<String, Employee> collect = empList.stream()
                 .collect(Collectors.groupingBy(e -> e.department.departmentName,

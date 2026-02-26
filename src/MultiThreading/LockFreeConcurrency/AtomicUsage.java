@@ -36,6 +36,7 @@ public class AtomicUsage {
     private static ConcurrentSkipListSet<Student> studentSet = new ConcurrentSkipListSet<>();
 
     public static void main(String[] args) {
+
         AtomicStudentId atomicStudentId = new AtomicStudentId();
         Callable<Student> studentMaker = () -> {
 //            int studentId = atomicStudentId.getNextAtomicId();
