@@ -1,0 +1,42 @@
+System Design Interview: TV Channel Subscription
+System Problem Statement:
+Design a subscription management system for a streaming TV platform.
+
+Requirements:
+
+Multi-pack Channels: A channel can belong to multiple packages
+(e.g., ESPN in both "Sports Pack" and "Premium Bundle")
+
+Package Subscriptions: Users can subscribe to packages with auto-renewal:
+
+Billing cycles: Weekly, Monthly, Quarterly
+
+Auto-renews unless cancelled
+
+Pay-Per-Day Channels: Users can buy individual channels:
+Each channel has a daily price User pays upfront:
+Daily Price × Number of Days No auto-renewal, expires after purchased duration
+Example: ESPN ₹10/day for 15 days = ₹150 upfront
+
+Graceful Cancellation: Cancelled subscriptions remain active until the paid period ends 1.
+--------------------------------
+Data Model & Entities Design core entities: Channel, Package, User, PackageSubscription, ChannelPurchase
+Show relationships (ER diagram or table schemas) Include key attributes, data types, primary/foreign keys
+
+How do you track subscription states and validity periods?
+What indexes are needed for performance?
+--------------------------------
+2. REST API Design Design user-facing APIs (no admin APIs):
+
+Subscribe to package
+Cancel subscription
+Purchase channel for N days
+Get my active subscriptions/purchases
+Check channel access (entitlement)
+----------------------------------
+3. High-Level Design Micro services architecture
+(User, Subscription, Channel Purchase, Entitlement, Payment, Notification services)
+Show interaction flows for: Package subscription Channel purchase
+Entitlement check (real-time, <100ms) Auto-renewal job
+
+Database choices and caching strategy Sequence diagrams for critical flows

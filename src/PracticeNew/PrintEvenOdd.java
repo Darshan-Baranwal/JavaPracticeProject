@@ -16,7 +16,7 @@ public class PrintEvenOdd {
                     }
                 }
                 if (i % 2 == 0) { //
-                    System.out.println(i);
+                    System.out.println(i + " By "+ Thread.currentThread().getName());
                     lock = !lock; // false -> true -> false
                     notify();
                 }
@@ -34,7 +34,7 @@ public class PrintEvenOdd {
                     }
                 }
                 if (i % 2 != 0) { //i = 1
-                    System.out.println(i);
+                    System.out.println(i + " By "+ Thread.currentThread().getName());
                     lock = !lock; // false
                     notify();
                 }
